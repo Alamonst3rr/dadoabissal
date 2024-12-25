@@ -6,7 +6,7 @@
     <title>Rolagem</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: Rockwell, sans-serif;
             text-align: center;
             background-color: #302a2a;
             margin: 0;
@@ -25,11 +25,16 @@
         h1 {
             margin-bottom: -5px;
         }
-        .dice-result img { 
-            width: px;
+        .dice-result {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        .dice-result img {
+            width: 140px;
             height: px;
         }
-
         .result-text {
             margin-top: -15px;
             font-size: 1.4rem;
@@ -47,36 +52,74 @@
         button:hover {
             background-color: #0056b3;
         }
+        select {
+            margin: 10px;
+            background-color: #5572d1;
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Dado das Profundezas</h1>
-        <div class="dice-result">
+        <div class="dice-result" id="dice-results">
             <img src="logotipo.png" alt="Dice face 1" id="dice-image">
         </div>
         <div class="result-text" id="result-text">Role o dado para revelar seu destino.</div>
-        <button onclick="rollDice()">Roll the Dice</button>
+        <select id="dice-count">
+            <option value="1">1 Dado</option>
+            <option value="2">2 Dados</option>
+            <option value="3">3 Dados</option>
+            <option value="4">4 Dados</option>
+            <option value="5">5 Dados</option>
+            <option value="6">6 Dados</option>
+            <option value="7">7 Dados</option>
+            <option value="8">8 Dados</option>
+            <option value="9">9 Dados</option>
+            <option value="10">10 Dados</option>
+        </select>
+        <button onclick="rollMultipleDice()">Lance seus dados</button>
     </div>
 
     <script>
         function rollDice() {
-            const diceResult = Math.floor(Math.random() * 6) + 1;
-            const diceImage = document.getElementById('dice-image');
+            return Math.floor(Math.random() * 6) + 1;
+        }
+
+        function rollMultipleDice() {
+            const diceCount = parseInt(document.getElementById('dice-count').value);
+            const diceResultsContainer = document.getElementById('dice-results');
             const resultText = document.getElementById('result-text');
 
-            const phrases = [
-                "O mar não quer seu avanço...",
-                "É bom cuidar da mente.",
-                "As ondas estão ao seu lado.",
-                "Meio difícil, não é?",
-                "Dá pro gasto!",
-                "Desagradavel, mas serve."
-            ];
+            // Clear previous results
+            diceResultsContainer.innerHTML = '';
 
-            diceImage.src = `dice${diceResult}.png`;
-            diceImage.alt = `Dice face ${diceResult}`;
-            resultText.textContent = phrases[diceResult - 1];
+            // Roll dice and display results
+            for (let i = 0; i < diceCount; i++) {
+                const diceResult = rollDice();
+                const diceImage = document.createElement('img');
+                diceImage.src = `dice${diceResult}.png`;
+                diceImage.alt = `Dice face ${diceResult}`;
+                diceResultsContainer.appendChild(diceImage);
+            }
+
+            // Set result text for multiple dice
+            if (diceCount === 1) {
+                const diceResult = rollDice();
+                const phrases = [
+                    "O mar não quer seu avanço...",
+                    "É bom cuidar da mente.",
+                    "As ondas estão ao seu lado.",
+                    "Meio difícil, não é?",
+                    "Dá pro gasto!",
+                    "Desagradavel, mas serve."
+                ];
+                resultText.textContent = phrases[diceResult - 1];
+            } else {
+                resultText.textContent = "Surpreendente...";
+            }
         }
     </script>
 </body>
