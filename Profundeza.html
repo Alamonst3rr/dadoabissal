@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rolagem</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #302a2a;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.952);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin-bottom: -5px;
+        }
+        .dice-result img { 
+            width: px;
+            height: px;
+        }
+
+        .result-text {
+            margin-top: -15px;
+            font-size: 1.4rem;
+            color: #990606;
+        }
+        button {
+            background-color: #007BFF;
+            color: rgb(2, 12, 100);
+            border: rgb(2, 15,);
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dado das Profundezas</h1>
+        <div class="dice-result">
+            <img src="logotipo.png" alt="Dice face 1" id="dice-image">
+        </div>
+        <div class="result-text" id="result-text">Role o dado para revelar seu destino.</div>
+        <button onclick="rollDice()">Roll the Dice</button>
+    </div>
+
+    <script>
+        function rollDice() {
+            const diceResult = Math.floor(Math.random() * 6) + 1;
+            const diceImage = document.getElementById('dice-image');
+            const resultText = document.getElementById('result-text');
+
+            const phrases = [
+                "O mar não quer seu avanço...",
+                "É bom cuidar da mente.",
+                "As ondas estão ao seu lado.",
+                "Meio difícil, não é?",
+                "Dá pro gasto!",
+                "Desagradavel, mas serve."
+            ];
+
+            diceImage.src = `dice${diceResult}.png`;
+            diceImage.alt = `Dice face ${diceResult}`;
+            resultText.textContent = phrases[diceResult - 1];
+        }
+    </script>
+</body>
+</html>
